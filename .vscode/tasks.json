@@ -7,14 +7,14 @@
           "label": "build",
           "command": "./build.sh",
           "type": "shell",
-          "args": [
-              
-          ],
           "windows": {
             "command": "./Build.cmd",
           },
           "problemMatcher": "$msCompile",
-          "group": "build"
+          "group": {
+            "kind": "build",
+            "isDefault": true
+          },
       }
     ]
   }
