@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
       - name: Build
-        run: dotnet msbuild -noLogo -m -graph -isolate  -p:Configuration=${{ matrix.configuration }} -bl:artifacts/log/build.binlog
+        run: dotnet msbuild -noLogo -m -p:Configuration=${{ matrix.configuration }} -bl:artifacts/log/build.binlog
       - name: Upload Results
         uses: actions/upload-artifact@v2
         with:

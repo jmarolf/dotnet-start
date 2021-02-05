@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 
-dotnet restore
-dotnet msbuild -noLogo -v:m -m -graph -isolate
+dotnet msbuild -noLogo -v:m -m -r -bl:artifacts/log/build.binlog 
