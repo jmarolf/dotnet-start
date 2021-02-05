@@ -9,6 +9,7 @@
   "extensions": [
       "ms-dotnettools.csharp",
       "tintoy.msbuild-project-tools",
+      "cschleiden.vscode-github-actions",
       "EditorConfig.EditorConfig"
   ],
   "postCreateCommand": "dotnet restore"
