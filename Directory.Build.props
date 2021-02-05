@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
 
+  <!-- Import our custom build layout -->
+  <Import Project="eng\Settings.props" />
+
   <!-- SDK settings -->
   <PropertyGroup>
     <!-- We set "allowPrerelease": true in our global.json file so don't warn us -->
