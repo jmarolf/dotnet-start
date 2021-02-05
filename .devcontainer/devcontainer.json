@@ -2,14 +2,20 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.140.1/containers/dotnetcore
 {
   "name": "C# (.NET 5)",
-  "image": "mcr.microsoft.com/vscode/devcontainers/dotnet:5.0",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": { 
+			"VARIANT": "5.0",
+			"INSTALL_NODE": "false",
+			"NODE_VERSION": "lts/*",
+			"INSTALL_AZURE_CLI": "false"
+		}
+	},
   "settings": {
       "terminal.integrated.shell.linux": "/bin/bash"
   },
   "extensions": [
       "ms-dotnettools.csharp",
-      "tintoy.msbuild-project-tools",
-      "cschleiden.vscode-github-actions",
       "EditorConfig.EditorConfig"
   ],
   "postCreateCommand": "dotnet restore"
