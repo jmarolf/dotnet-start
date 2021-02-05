@@ -1,0 +1,32 @@
+name: Continuous Integration
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  build:
+    name: Build
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        configuration: [debug, release]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+      - name: Build
+        run: dotnet msbuild -r -noLogo -m -graph -isolate  -p:Configuration=${{ matrix.configuration }} -bl:artifacts/log/build.binlog
+      - name: Upload Results
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.os }}_${{ matrix.configuration }}
+          path: |
+            ./artifacts/bin/**/*
+            ./artifacts/log/**/*
+          if-no-files-found: error
