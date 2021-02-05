@@ -3,8 +3,6 @@
 	// for the documentation about the extensions.json format
 	"recommendations": [
         "ms-dotnettools.csharp",
-        "tintoy.msbuild-project-tools",
-        "cschleiden.vscode-github-actions",
         "EditorConfig.EditorConfig"
 	]
 }
