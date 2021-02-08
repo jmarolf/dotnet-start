@@ -21,7 +21,7 @@
   <PropertyGroup>
     <AnalysisLevel>6</AnalysisLevel> <!-- Opt into more advanced analysis -->
     <LangVersion>9</LangVersion> <!-- Ensure all projects use the latest language version -->
-    <Nullable>enable</Nullable>
+    <Nullable>enable</Nullable> <!-- Turn on nullable-reference-type analysis -->
   </PropertyGroup>
 
 </Project>
