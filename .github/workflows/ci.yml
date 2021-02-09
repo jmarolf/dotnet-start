@@ -19,8 +19,15 @@ jobs:
           fetch-depth: 0
       - name: Setup .NET
         uses: actions/setup-dotnet@v1.7.2
-      - name: Install dependencies
-        run: dotnet restore
+      - name: Try get cached dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ github.workspace }}/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+      - name: Validate dependencies
+        run: dotnet restore --locked-mode --packages ${{ github.workspace }}/.nuget/packages
       - name: Build
         run: dotnet msbuild -noLogo -m -p:Configuration=${{ matrix.configuration }} -bl:artifacts/log/build.binlog
       - name: Upload Results
