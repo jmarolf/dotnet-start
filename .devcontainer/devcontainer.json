@@ -16,6 +16,7 @@
   },
   "extensions": [
       "ms-dotnettools.csharp",
+      "formulahendry.dotnet-test-explorer",
       "EditorConfig.EditorConfig"
   ],
   "postCreateCommand": "dotnet restore"
