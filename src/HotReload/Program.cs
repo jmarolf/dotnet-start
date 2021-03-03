@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.MSBuild;
 
 namespace HotReload
 {
-    public partial class Program
+    public class Program
     {
         static async Task Main(string[] args)
         {
@@ -41,7 +41,7 @@ namespace HotReload
             Console.WriteLine($"Total number of projects: '{solution.ProjectIds.Count}'");
             Console.WriteLine($"Total number of files: '{solution.Projects.SelectMany(p => p.DocumentIds).Count()}'");
         }
-        
+
         private static VisualStudioInstance SelectVisualStudioInstance(VisualStudioInstance[] visualStudioInstances)
         {
             Console.WriteLine("Multiple installs of MSBuild detected please select one:");
@@ -86,5 +86,18 @@ namespace HotReload
                 _output.WriteLine($"{loadProgress.Operation,-15} {loadProgress.ElapsedTime,-15:m\\:ss\\.fffffff} {projectDisplay}");
             }
         }
+
+#if DEBUG
+        [Xunit.Fact]
+        public static void TestConsoleProgressReporter()
+        {
+            var output = new StringWriter();
+            var reporter = new ConsoleProgressReporter(output);
+            var progress = new ProjectLoadProgress();
+            reporter.Report(progress);
+            var result = output.ToString();
+            Xunit.Assert.Equal("Evaluate        0:00.0000000    \r\n", result);
+        }
+#endif
     }
 }
