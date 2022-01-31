@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
 
+  <Sdk Name="DotNet.ReproducibleBuilds.Isolated" Version="1.1.1" />
   <!-- Import our custom build layout -->
   <Import Project="eng\Settings.props" />
 
@@ -23,5 +24,10 @@
     <LangVersion>latest</LangVersion> <!-- Ensure all projects use the latest language version -->
     <Nullable>enable</Nullable> <!-- Turn on nullable-reference-type analysis -->
   </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Use reproduceable builds feature -->
+    <PackageReference Include="DotNet.ReproducibleBuilds" PrivateAssets="All"/>
+  </ItemGroup>
 
 </Project>

@@ -1,0 +1,27 @@
+{
+    "files.associations": {
+        "*.csproj": "msbuild",
+        "*.fsproj": "msbuild",
+        "*.globalconfig": "ini",
+        "*.manifest": "xml",
+        "*.nuspec": "xml",
+        "*.pkgdef": "ini",
+        "*.projitems": "msbuild",
+        "*.props": "msbuild",
+        "*.resx": "xml",
+        "*.rsp": "Powershell",
+        "*.shproj": "msbuild",
+        "*.slnf": "json",
+        "*.targets": "msbuild",
+        "*.vbproj": "msbuild",
+        "*.vsixmanifest": "xml",
+        "*.vstemplate": "xml"
+      },
+    // ms-dotnettools.csharp settings
+    "omnisharp.disableMSBuildDiagnosticWarning": true,
+    "omnisharp.enableEditorConfigSupport": true,
+    "omnisharp.enableImportCompletion": true,
+    "omnisharp.enableRoslynAnalyzers": true,
+    "omnisharp.useModernNet": true,
+    "omnisharp.enableAsyncCompletion": true,
+}

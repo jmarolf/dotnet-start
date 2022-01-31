@@ -1,2 +1,3 @@
 @echo off
-dotnet msbuild -noLogo -v:m -m -r -bl:artifacts/log/build.binlog 
+dotnet restore
+dotnet msbuild -graph -isolate -binaryLogger:artifacts/log/build.binlog 
