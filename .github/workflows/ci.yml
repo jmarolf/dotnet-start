@@ -1,3 +1,4 @@
+
 name: Continuous Integration
 on:
   push:
@@ -11,7 +12,7 @@ on:
     - 'docs/**'
 jobs:
   build:
-    name: Build
+    name: Build and Test
     strategy:
       fail-fast: false
       matrix:
@@ -35,11 +36,33 @@ jobs:
         run: dotnet restore --locked-mode --packages ${{ github.workspace }}/.nuget/packages
       - name: Build
         run: dotnet msbuild -p:Configuration=${{ matrix.configuration }} -graph -isolate -bl:artifacts/log/build.binlog
-      - name: Upload Results
+      - name: Install ProcDump
+        if: runner.os == 'Windows'
+        working-directory: ${{env.GITHUB_WORKSPACE}}
+        shell: pwsh
+        run: |
+          mkdir ${{env.GITHUB_WORKSPACE}}\procdump
+          Invoke-WebRequest -Uri https://download.sysinternals.com/files/Procdump.zip -UseBasicParsing -OutFile ${{env.GITHUB_WORKSPACE}}\procdump\Procdump.zip | Out-Null
+          Expand-Archive -Path ${{env.GITHUB_WORKSPACE}}\procdump\Procdump.zip ${{env.GITHUB_WORKSPACE}}\procdump\
+          echo "PROCDUMP_PATH=${{env.GITHUB_WORKSPACE}}\procdump\" >> $GITHUB_ENV
+          echo "${{env.GITHUB_WORKSPACE}}\procdump\" >> $GITHUB_PATH
+      - name: Test
+        run: dotnet test --no-restore --no-build --blame --blame-hang-dump-type full --blame-hang-timeout 10min --blame-crash-dump-type full --blame-crash-collect-always true --logger "trx;LogFileName=TestResults.trx" -p:ParallelizeTestCollections=true --collect:"XPlat Code Coverage" --results-directory artifacts/test_results/
+      - name: Upload Test Results
+        uses: dorny/test-reporter@v1.5.0
+        continue-on-error: true
+        if: success() || failure()
+        with:
+          name: ${{ matrix.os }} ${{ matrix.configuration }} Test Results
+          path: 'artifacts/test_results/*.trx'
+          reporter: dotnet-trx 
+      - name: Upload Build Artifacts
         uses: actions/upload-artifact@v2.3.1
         with:
           name: ${{ matrix.os }}_${{ matrix.configuration }}
           path: |
             ./artifacts/bin/**/*
             ./artifacts/log/**/*
+            ./artifacts/packages/**/*
+            ./artifacts/test_results/**/*
           if-no-files-found: error
